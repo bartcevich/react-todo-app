@@ -13,7 +13,7 @@ const TasksList = ({data}) => {
   const [newName, setNewName] = useState('');
   const [newAge, setNewAge] = useState('');
   const [newCheck, setNewCheck] = useState('');
-  const [newContent, setNewContent] = useState('');
+  const [newBody, setNewBody] = useState('');
 
   function isEmptyOrSpaces(str){
     return str === null || str.match(/^ *$/) !== null;
@@ -27,7 +27,7 @@ const TasksList = ({data}) => {
         <h4 className="header_h43">Subscription</h4>
         <h4 className="header_h44">Employment</h4>
       </div>
-    <div className="tasks-list" style={{ overflowY: 'scroll'}}>
+    <div className="tasks-list" style={{ overflowY: 'scroll', overflowX: 'hidden'}}>
 
       <div className="task-container">
         {data && data.map(task => {
@@ -50,32 +50,45 @@ const TasksList = ({data}) => {
                 }}></input>}
 
                 {(!editing || task.id !== editingId ) && <h4 className="content_h43" id={"content-" + task.id}>{task.body}</h4>}
-                {editing && task.id === editingId && <textarea className="task-newcontent" value={newContent} onChange={(e) => {
-                  setNewContent(e.target.value);
+                {editing && task.id === editingId && <textarea className="task-newcontent" value={newBody} onChange={(e) => {
+                  setNewBody(e.target.value);
                 }}></textarea>}
 
-                {(!editing || task.id !== editingId ) && <h4 className="content_h44" id={"age-" + task.id}>{
-                  newCheck === "" ? task.check : (editing && task.id === editingId ? newCheck : task.check)
-                }</h4>}
+                {/* {(!editing || task.id !== editingId ) && <h4 className="content_h43" id={"content-" + task.id}>{ */}
+                  {/* newContent === "" ? task.content : (editing && task.id === editingId ? newContent : task.content)}</h4>} */}
+                {/* {editing && task.id === editingId && <input type="text" value={newContent} onChange={(e) => { */}
+                  {/* setNewContent(e.target.value);}}></input>} */}
+
+                {(!editing || task.id !== editingId ) && <h4 className="content_h44" id={"check-" + task.id}>{
+                  newCheck === "" ? task.check : (editing && task.id === editingId ? newCheck : task.check)}</h4>}
                 {editing && task.id === editingId && <input type="text" value={newCheck} onChange={(e) => {
-                  setNewCheck(e.target.value);
-                }}></input>}
+                  setNewCheck(e.target.value);}}></input>}
                 {/* <p>{task.datetime}</p> */}
                 
-                {(!editing || task.id !== editingId ) && <button onClick={() => {setEditingId(task.id);setEditing(!editing); setNewName(task.name); setNewContent(task.body)}}><AiFillEdit></AiFillEdit> Edit</button>}
+                {(!editing || task.id !== editingId ) && <button onClick={() => {
+                  setEditingId(task.id);
+                  setEditing(!editing); 
+                  setNewName(task.name); 
+                  setNewAge(task.age);
+                  setNewCheck(task.check);
+                  setNewBody(task.body)}}>
+                    <AiFillEdit></AiFillEdit> Edit</button>}
 
                 {editing && task.id === editingId && <button onClick={() => {
-                  if(isEmptyOrSpaces(newContent) ||isEmptyOrSpaces(newName)){
+                  if(isEmptyOrSpaces(newBody) ||isEmptyOrSpaces(newName) ||isEmptyOrSpaces(newAge) ||isEmptyOrSpaces(newCheck) ){
                     toast.error('Fill the blank fields');
                   }else{
-                    editTaskContent(task.id, newContent, newName);
+                    console.log( "test=0", task.id, newName, newAge, newBody, newCheck);
+                    editTaskContent(task.id, newName, newAge, newCheck, newBody);
                     setEditingId(null);
                     setEditing(!editing);
-                    setData(getTasks());
+                    // setData(getTasks());
                   }
                 }}><RiSave3Line></RiSave3Line> Save</button>}
 
-                <button className="delete-btn" onClick={() => {removeTask(task.id); setData(getTasks()); toast.success('Successfully deleted');}}> <AiFillDelete></AiFillDelete>Delete</button>
+                <button className="delete-btn" onClick={() => {
+                  removeTask(task.id); setData(getTasks()); 
+                  toast.success('Successfully deleted');}}> <AiFillDelete></AiFillDelete>Delete</button>
               </div>
             );
         })}

@@ -158,6 +158,19 @@ code {
     padding: 5px 15px;
   width: 250px;
   height: 40px;
+  /* background-repeat: no-repeat; */
+  /* background-position: right center;  */
+  /* background-image: url(./images/arrow_up_icon_184269.png); */
+
+}
+.input_age::-webkit-inner-spin-button,
+.input_age::-webkit-outer-spin-button {
+  /* background-color: #b80505; */
+  /* background-position: right center; */
+  height: 30px;
+  padding: 0.5rem;
+  /* padding-right: 2rem; */
+  opacity: 1;
 }
 .input_body{
   background: black;
@@ -175,6 +188,16 @@ code {
   display: flex;
   width: 253px;
 }
+.button_insert{
+  background: black;
+  border: 2px solid #757575;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #757575;
+    padding: 5px 15px;
+  width: 285px;
+  height: 50px;
+}
 
 .add-task .task-options textarea{
   outline: none;
@@ -187,14 +210,7 @@ code {
   max-height: 200px;
 }
 
-.add-task .task-options button{
-  background: var(--color);
-  color: #fff;
-  border: none;
-  padding: 5px 15px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+
 .tasks-list{
   background: #000;
   overflowY: scroll;
